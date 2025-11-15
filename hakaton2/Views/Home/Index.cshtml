@@ -17,9 +17,43 @@
         <h1 class="text-success">Добре дошли в EcoPoints!</h1>
         <p class="lead">Платформа, която мотивира гражданите да рециклират чрез точки и класации.</p>
     </div>
+
+    <div class="row mt-4">
+        <!-- Карточка за добавяне на предмет -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Добави рециклиран предмет</h5>
+                    <p class="card-text">Регистрирай своите действия и печели точки.</p>
+                    <a href="@Url.Action("Create","Items")" class="btn btn-primary">Добави ➕</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка за класация -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Класация</h5>
+                    <p class="card-text">Виж кои са най-активните граждани в града.</p>
+                    <a href="@Url.Action("Index","Leaderboard")" class="btn btn-success">Виж класация 🏆</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка за пунктове -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Пунктове за рециклиране</h5>
+                    <p class="card-text">Намери най-близкия пункт за рециклиране.</p>
+                    <a href="@Url.Action("Index","Stations")" class="btn btn-info">Виж картата 📍</a>
+                </div>
+            </div>
+        </div>
     <div class="text-center">
         <!-- context -->
         <pre></pre>
     </div>
 </div>
-</html>
+
