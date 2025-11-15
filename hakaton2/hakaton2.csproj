@@ -11,18 +11,22 @@
     <Compile Remove="Views\NewFolder - Copy %282%29\**" />
     <Compile Remove="Views\NewFolder - Copy\**" />
     <Compile Remove="Views\NewFolder\**" />
+    <Compile Remove="wwwroot\assets\**" />
     <Content Remove="ViewModels\**" />
     <Content Remove="Views\NewFolder - Copy %282%29\**" />
     <Content Remove="Views\NewFolder - Copy\**" />
     <Content Remove="Views\NewFolder\**" />
+    <Content Remove="wwwroot\assets\**" />
     <EmbeddedResource Remove="ViewModels\**" />
     <EmbeddedResource Remove="Views\NewFolder - Copy %282%29\**" />
     <EmbeddedResource Remove="Views\NewFolder - Copy\**" />
     <EmbeddedResource Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\assets\**" />
     <None Remove="ViewModels\**" />
     <None Remove="Views\NewFolder - Copy %282%29\**" />
     <None Remove="Views\NewFolder - Copy\**" />
     <None Remove="Views\NewFolder\**" />
+    <None Remove="wwwroot\assets\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\hakaton2.dataAccess\hakaton2.dataAccess.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
   <ItemGroup>

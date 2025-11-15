@@ -12,7 +12,7 @@ namespace hakaton2.Models
         public string Location { get; set; } = string.Empty;
         public int? CurrentParticipants { get; set; }
         public DateTime? CreatedOn { get; set; }
-        public string Creator { get; set; }
+        public string Creator { get; set; } 
 
     }
 }
