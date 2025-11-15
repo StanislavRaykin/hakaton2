@@ -14,13 +14,11 @@ namespace hakaton2.Controllers
             {
                 new { Title = "City Cleanup", Description = "Community cleanup in downtown parks.", Start = now.AddDays(-10), End = now.AddDays(-9) },
                 new { Title = "Recycling Drive", Description = "Bring your recyclables - electronics accepted.", Start = now.AddDays(-1), End = now.AddDays(1) },
-                new { Title = "Tree Planting", Description = "Planting native trees along the river.", Start = now.AddDays(3), End = now.AddDays(3) },
-                new { Title = "Composting Workshop", Description = "Learn how to compost at home.", Start = now.AddDays(7), End = now.AddDays(7) },
-                new { Title = "Sustainability Fair", Description = "Local vendors and eco-initiatives.", Start = now.AddDays(14), End = now.AddDays(14) }
+                new { Title = "Tree Planting", Description = "Planting native trees along the river.", Start = now.AddDays(3), End = now.AddDays(3) }
             };
 
-            // The view file is named Views/Events/Events.cshtml, so specify the view name explicitly.
-            return View("Views/Events/Events.cshtml", sample);
+            // Ensure Razor resolves the specific view file
+            return View("~/Views/Events/Events.cshtml", sample);
         }
     }
 }
