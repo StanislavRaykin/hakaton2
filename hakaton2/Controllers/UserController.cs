@@ -28,7 +28,7 @@ namespace hakaton2.Controllers
         {
             if (!ModelState.IsValid)
                 return View(login);
-
+            
             bool success = await _userManager.Login(login);
             if (success)
             {
