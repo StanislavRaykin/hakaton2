@@ -34,14 +34,14 @@ namespace hakaton2.Controllers
         // POST: /User/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(UserRegisterViewModel model)
+        public IActionResult Register(UserRegisterViewModel register)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return View(register);
 
             // TODO: create user (check uniqueness, hash password, persist)
             TempData["SuccessMessage"] = "Успешна регистрация. Влезте в профила си.";
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Index()
