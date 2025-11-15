@@ -31,7 +31,7 @@ var mapperconfiguration = new MapperConfiguration(option =>
 builder.Services.AddScoped<IMapper>(_ => mapperconfiguration.CreateMapper());
 
 var app = builder.Build();
-var app = builder.Build();  
+  
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

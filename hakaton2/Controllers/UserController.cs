@@ -30,7 +30,7 @@ namespace hakaton2.Controllers
         {
             return View();
         }
-
+        [HttpPost]
         // POST: /User/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
