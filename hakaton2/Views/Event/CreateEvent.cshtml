@@ -1,0 +1,40 @@
+﻿@model testhakaton1.ViewModels.EventRequestViewModel
+
+@{
+    ViewBag.Title = "Заявка за рециклиращ евент";
+}
+
+@{
+    ViewData["Title"] = "RecyclingEventRequest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/CreateEvent.css" asp-append-version="true" />
+}
+
+<div class="register-container">
+    <h2>Заявка за рециклиращ евент</h2>
+
+    <@* form *@ @* asp-action="SubmitRecyclingEvent" asp-controller="Recycling" method="post"> *@
+
+        <div class="form-group">
+            <label>Заглавие на евента</label>
+            <input asp-for="Title" type="text" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Създател на евента</label>
+            <input asp-for="Creator" type="text" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Локация</label>
+            <input asp-for="Location" type="text" required />
+            <span class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn-register">Изпрати заявка</button>

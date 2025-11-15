@@ -1,0 +1,169 @@
+﻿@using System.Linq
+@using System.Collections
+@model IEnumerable<dynamic>
+
+@{
+    ViewBag.Title = "Events - EcoPoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var source = Model ?? (ViewData["Events"] as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+    var items = source.ToList();
+
+    Func<dynamic, string[], string> GetString = (item, names) =>
+    {
+        if (item == null) return string.Empty;
+        var t = item.GetType();
+        foreach (var n in names)
+        {
+            var prop = t.GetProperty(n);
+            if (prop != null) { var v = prop.GetValue(item); return v?.ToString() ?? string.Empty; }
+            var field = t.GetField(n);
+            if (field != null) { var v = field.GetValue(item); return v?.ToString() ?? string.Empty; }
+            if (item is IDictionary dict && dict.Contains(n)) { var v = dict[n]; return v?.ToString() ?? string.Empty; }
+        }
+        return string.Empty;
+    };
+
+    Func<dynamic, string[], DateTime?> GetDate = (item, names) =>
+    {
+        if (item == null) return null;
+        var t = item.GetType();
+        foreach (var n in names)
+        {
+            var prop = t.GetProperty(n);
+            if (prop != null)
+            {
+                var v = prop.GetValue(item);
+                if (v is DateTime dt) return dt;
+                if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
+            }
+            var field = t.GetField(n);
+            if (field != null)
+            {
+                var v = field.GetValue(item);
+                if (v is DateTime dt) return dt;
+                if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
+            }
+            if (item is IDictionary dict && dict.Contains(n))
+            {
+                var v = dict[n];
+                if (v is DateTime dt) return dt;
+                if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
+            }
+        }
+        return null;
+    };
+
+    var now = DateTime.Now;
+    // CAST Start/End explicitly to DateTime? so HasValue checks are safe even when runtime produced plain DateTime
+    var eventsWithDates = items
+        .Select(i => new {
+            Item = i,
+            Title = GetString(i, new[] { "Title", "Name", "EventName" }),
+            Description = GetString(i, new[] { "Description", "Summary", "Details" }),
+            Start = (DateTime?)GetDate(i, new[] { "Start", "StartDate", "Date", "EventDate" }),
+            End = (DateTime?)GetDate(i, new[] { "End", "EndDate", "Finish", "EndTime" })
+        })
+        .Where(x => x.Start != null) // require a start date
+        .ToList();
+
+    var past = eventsWithDates
+        .Where(x => (x.End.HasValue ? x.End.Value < now : x.Start.Value < now))
+        .OrderByDescending(x => x.Start)
+        .ToList();
+
+    var last = past.FirstOrDefault();
+
+    var active = eventsWithDates
+        .Where(x => x.Start <= now && (x.End == null || x.End >= now))
+        .OrderBy(x => x.Start)
+        .ToList();
+
+    var upcoming = eventsWithDates
+        .Where(x => x.Start > now)
+        .OrderBy(x => x.Start)
+        .ToList();
+}
+
+<div class="container mt-5">
+    <div class="row mb-3">
+        <div class="col-12 text-center">
+            <h1 class="text-success">Събития</h1>
+            <hr />
+        </div>
+    </div>
+
+    <!-- Last event (stacked) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4>Последното събитие:</h4>
+            @if (last == null)
+            {
+                <div class="alert alert-secondary">Няма събития.</div>
+            }
+            else
+            {
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@last.Title</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@last.Start.Value.ToString("f")@(last.End.HasValue ? " — " + last.End.Value.ToString("f") : "")</h6>
+                        <p class="card-text">@last.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Active events (stacked) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4>Активни:</h4>
+            @if (!active.Any())
+            {
+                <div class="alert alert-secondary">Няма активни събития.</div>
+            }
+            else
+            {
+                @foreach (var e in active)
+                {
+                    <div class="card mb-2 border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">@e.Title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@e.Start.Value.ToString("f")@(e.End.HasValue ? " — " + e.End.Value.ToString("f") : "")</h6>
+                            <p class="card-text">@e.Description</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Upcoming events (stacked list) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4>Предстоящи събития</h4>
+            @if (!upcoming.Any())
+            {
+                <div class="alert alert-secondary">Няма събития.</div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var u in upcoming)
+                    {
+                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                            <div class="me-3">
+                                <div class="fw-bold">@u.Title</div>
+                                <small class="text-muted">@u.Start.Value.ToString("f")@(u.End.HasValue ? " — " + u.End.Value.ToString("f") : "")</small>
+                                <div class="small mt-1">@u.Description</div>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary rounded-pill">@Math.Max(0, (u.Start.Value - now).Days) d</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

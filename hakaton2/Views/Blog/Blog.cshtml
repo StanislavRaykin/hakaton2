@@ -1,0 +1,73 @@
+﻿@using System.Linq
+@model IEnumerable<dynamic>
+
+@{
+    ViewBag.Title = "Блог - EcoPoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var source = Model ?? (ViewData["Posts"] as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+    var posts = source.ToList();
+
+    string GetValue(dynamic item, string[] names)
+    {
+        if (item == null) return string.Empty;
+        var t = item.GetType();
+        foreach (var n in names)
+        {
+            var prop = t.GetProperty(n);
+            if (prop != null) { var v = prop.GetValue(item); return v?.ToString() ?? string.Empty; }
+            var field = t.GetField(n);
+            if (field != null) { var v = field.GetValue(item); return v?.ToString() ?? string.Empty; }
+            if (item is System.Collections.IDictionary dict && dict.Contains(n)) { var v = dict[n]; return v?.ToString() ?? string.Empty; }
+        }
+        return string.Empty;
+    }
+}
+
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h1 class="text-success">Блог на EcoPoints</h1>
+        <p class="lead text-muted">Истории, съвети и инициативи — вдъхновете се да рециклирате повече.</p>
+        <hr />
+    </div>
+
+    <div class="row">
+        @if (!posts.Any())
+        {
+            <div class="col-12">
+                <div class="alert alert-secondary text-center">Все още няма публикации в блога.</div>
+            </div>
+        }
+        else
+        {
+            foreach (var post in posts)
+            {
+                var title = GetValue(post, new[] { "Title", "Name" });
+                var excerpt = GetValue(post, new[] { "Excerpt", "Summary", "Description" });
+                var slug = GetValue(post, new[] { "Slug", "Id" });
+                var date = GetValue(post, new[] { "Published", "Date" });
+                var img = GetValue(post, new[] { "ImageUrl", "Image", "Thumbnail" }) ?? "/images/blog/default.jpg";
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-4 d-none d-md-block">
+                                <img src="@img" class="img-fluid rounded-start h-100" style="object-fit:cover;" alt="@title" />
+                            </div>
+                            <div class="col">
+                                <div class="card-body">
+                                    <h5 class="card-title">@title</h5>
+                                    @if (!string.IsNullOrWhiteSpace(date))
+                                    {
+                                        <p class="text-muted small mb-2">@date</p>
+                                    }
+                                    <p class="card-text">@excerpt</p>
+                                    <a href="@Url.Action("Post", "Blog", new { slug = slug })" class="btn btn-sm btn-outline-success">Прочети повече</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

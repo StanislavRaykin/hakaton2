@@ -2,8 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title - EcoPoints</title>
     <link rel="stylesheet" href="~/css/IndexStyle.css" />
+    @RenderSection("Styles", required: false)
+
 </head>
 <body class="d-flex flex-column">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -20,6 +23,8 @@
                     <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Events")">Events</a></li>
                     <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Blog")">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Points")">Points Exchange</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Leaderboard", "Home")">Top 10</a></li>
+                    <li class="nav-item"><a class="nav-link" href="@Url.Action("About", "Home")">About</a></li>
                 </ul>
 
                 <ul class="navbar-nav ms-auto">
@@ -44,7 +49,8 @@
                     <li><a href="@Url.Action("Index", "Events")" class="text-light">Events</a></li>
                     <li><a href="@Url.Action("Index", "Blog")" class="text-light">Blog</a></li>
                     <li><a href="@Url.Action("Index", "Points")" class="text-light">Points Exchange</a></li>
-                    <li><a href="@Url.Action("Index", "About")" class="text-light">About</a></li>
+                    <li><a href="@Url.Action("Leaderboard", "Home")" class="text-light">Top 10</a></li>
+                    <li><a href="@Url.Action("About", "Home")" class="text-light">About</a></li>
                 </ul>
                 <p class="mb-0">© 2025 EcoPoints</p>
             </div>

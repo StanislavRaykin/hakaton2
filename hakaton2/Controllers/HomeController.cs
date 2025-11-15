@@ -15,18 +15,24 @@ namespace hakaton2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Views/Home/Index.cshtml");
         }
 
-        public ViewResult About()
+        public IActionResult About()
         {
-            return View();
+            return View("/Views/About/About.cshtml");
         }
 
-        public IActionResult Privacy()
+        public IActionResult Leaderboard()
         {
-            return View();
+            return View("/Views/Leaderboard/Leaderboard.cshtml");
         }
+
+        public IActionResult Events()
+        {
+            return View("/Views/Events/Events.cshtml");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,0 +1,96 @@
+﻿@using System.Linq
+@using System.Collections
+@model IEnumerable<dynamic>
+
+@{
+    ViewBag.Title = "Leaderboard - EcoPoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Resolve the incoming data source: Model first, then ViewData["Leaderboard"], then empty.
+    var source = Model ?? (ViewData["Leaderboard"] as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+
+    // Materialize to list for sorting and indexing.
+    var items = source.ToList();
+
+    // Helper to extract named property/field or dictionary entry.
+    Func<dynamic, string[], string> GetValue = (item, names) =>
+    {
+        if (item == null) return string.Empty;
+        var t = item.GetType();
+        foreach (var n in names)
+        {
+            var prop = t.GetProperty(n);
+            if (prop != null) { var v = prop.GetValue(item); return v?.ToString() ?? string.Empty; }
+            var field = t.GetField(n);
+            if (field != null) { var v = field.GetValue(item); return v?.ToString() ?? string.Empty; }
+            if (item is IDictionary dict && dict.Contains(n)) { var v = dict[n]; return v?.ToString() ?? string.Empty; }
+        }
+        return string.Empty;
+    };
+
+    // Determine a numeric score for sorting.
+    Func<dynamic, int> ScoreValue = item =>
+    {
+        var s = GetValue(item, new[] { "Points", "Score", "Value", "PointsTotal", "Total" });
+        int v;
+        return int.TryParse(s, out v) ? v : 0;
+    };
+
+    // Sort descending and take top 10.
+    var top = items.OrderByDescending(ScoreValue).Take(10).ToList();
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="text-success">Leaderboard</h1>
+            <p class="lead">Top contributors by EcoPoints</p>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @if (!top.Any())
+            {
+                <div class="alert alert-secondary text-center">No scores available yet.</div>
+            }
+            else
+            {
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width:70px">#</th>
+                            <th>User</th>
+                            <th style="width:150px" class="text-end">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var rank = 1;
+                            foreach (var item in top)
+                            {
+                                var name = GetValue(item, new[] { "Name", "UserName" });
+                                if (string.IsNullOrWhiteSpace(name)) name = "Player " + rank;
+                                var points = GetValue(item, new[] { "Points", "Score", "Value", "PointsTotal", "Total" });
+                        }
+                        }
+                        @for (int i = 0; i < top.Count; i++)
+                        {
+                            var item = top[i];
+                            var name = GetValue(item, new[] { "Name", "UserName" });
+                            if (string.IsNullOrWhiteSpace(name)) name = "Player " + (i + 1);
+                            var points = GetValue(item, new[] { "Points", "Score", "Value", "PointsTotal", "Total" });
+                            <tr>
+                                <td class="align-middle">@((i + 1))</td>
+                                <td class="align-middle">@name</td>
+                                <td class="align-middle text-end fw-bold">@points</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
