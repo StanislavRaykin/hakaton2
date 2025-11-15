@@ -20,7 +20,7 @@ namespace hakaton2.Controllers
             };
 
             // The view file is named Views/Events/Events.cshtml, so specify the view name explicitly.
-            return View("Events", sample);
+            return View("Views/Events/Events.cshtml", sample);
         }
     }
 }
