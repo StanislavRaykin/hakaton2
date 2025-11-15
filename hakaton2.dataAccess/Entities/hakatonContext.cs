@@ -13,10 +13,17 @@ public partial class hakatonContext : DbContext
     {
     }
 
+    public virtual DbSet<Event> Events { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.Property(e => e.EventId).ValueGeneratedNever();
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 

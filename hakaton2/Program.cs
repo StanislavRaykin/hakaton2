@@ -1,12 +1,17 @@
+using hakaton2.dataAccess.Entities;
 using Microsoft.AspNetCore.Builder;
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationScheme);
+
+builder.Services.AddDbContext<hakatonContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("hakatonContext")));
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.

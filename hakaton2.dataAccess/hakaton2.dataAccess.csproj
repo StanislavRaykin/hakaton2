@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="profilers\" />
+    <ProjectReference Include="..\hakaton2.Models\hakaton2.Models.csproj" />
   </ItemGroup>
 
 </Project>
