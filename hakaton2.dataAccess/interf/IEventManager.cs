@@ -15,7 +15,7 @@ namespace hakaton2.dataAccess.interf
     internal interface IEventManager
     {
         public Task Login(UserLoginViewModel vm);
-        
-        public Task Create(Event)
+
+        public Task Create();
     }
 }

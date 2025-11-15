@@ -24,7 +24,7 @@ builder.Services.AddDbContext<hakatonContext>(options =>
 
 
 builder.Services.AddAutoMapper(typeof(EventProFiler)); // scans profile and registers IMapper
-var mapperConfiguration = new MapperConfiguration(cfg => cfg.AddProfile(new EventProFiler()));
+MapperConfiguration mapperConfiguration = new(cfg => cfg.AddProfile(new EventProFiler()));
 IMapper mapper = mapperConfiguration.CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<IEventManager, EventManager>();
