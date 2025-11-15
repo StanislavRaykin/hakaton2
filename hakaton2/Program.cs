@@ -3,8 +3,13 @@ using Microsoft.AspNetCore.Builder;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using hakaton2.dataAccess;
+using hakaton2.dataAccess.interf;
+using hakaton2.dataAccess.dataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddScoped<IUserManager, UserDataAccess>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
