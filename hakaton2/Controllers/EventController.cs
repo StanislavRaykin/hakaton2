@@ -1,4 +1,5 @@
-﻿using hakaton2.Models;
+﻿using hakaton2.dataAccess.Entities;
+using hakaton2.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace hakaton2.Controllers
@@ -36,9 +37,9 @@ namespace hakaton2.Controllers
                 return View();
             }
 
-            Event event = RequestEventViewModel.RequestTrackVMToTrack(requesteventVM);
-            db.Tracks.Add(event);
-            db.SaveChanges();
+            //Event event = RequestEventViewModel.RequestEventVMToTrack(requesteventVM);
+            //db.Events.Add(event);
+            //db.SaveChanges();
             return RedirectToAction("View");
         }
     }
