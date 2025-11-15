@@ -20,7 +20,12 @@ namespace hakaton2.Controllers
 
         public IActionResult About()
         {
-            return View();
+            return View("/Views/About/About.cshtml");
+        }
+
+        public IActionResult Leaderboard()
+        {
+            return View("/Views/Leaderboard/Leaderboard.cshtml");
         }
 
         public IActionResult Privacy()
