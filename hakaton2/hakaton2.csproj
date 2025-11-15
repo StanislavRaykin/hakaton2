@@ -11,10 +11,4 @@
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\NewFolder - Copy %282%29\" />
-    <Folder Include="Views\NewFolder - Copy\" />
-    <Folder Include="Views\NewFolder\" />
-  </ItemGroup>
-
 </Project>
