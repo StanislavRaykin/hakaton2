@@ -18,9 +18,9 @@ namespace hakaton2.Controllers
             return View();
         }
 
-        public ViewResult About()
+        public ActionResult About()
         {
-            return View();
+            return View("/Views/About/About.cshtml");
         }
 
         public IActionResult Privacy()
