@@ -55,49 +55,44 @@ html {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-body {
-    margin-bottom: 60px;
-    background-color: #F0FFF4;
-    padding-top: 70px; 
+html, body {
+    height: 100%;
 }
 
-main.container {
+body {
+    margin: 0;
+    background-color: #F0FFF4;
+    padding-top: 70px; /* space for fixed-top navbar; adjust if your navbar height differs */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    min-height: 100vh;
+}
+
+/* Main container is centered by layout markup (flex utilities) */
+/* Ensure elements inside take full width where needed */
+main.container {
+    width: 100%;
     box-sizing: border-box;
-    min-height: calc(100vh - 130px);
-    padding: 1.5rem 1rem; 
 }
 
-main.container .row,
-main.container .col-12,
-main.container .col-md-4,
-main.container .card,
-main.container .list-group {
-    width: 100%;
-}
-
+/* Footer: remove absolute positioning so it participates in document flow */
 footer {
-    position: absolute;
-    bottom: 0;
+    /* was absolute; now participate in layout so there is no "hole" beneath */
+    position: relative;
     width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
     background-color: #1B2830;
     color: #F0FFF4;
     padding: 2rem 1rem;
 }
 
-    footer a {
-        display: block;
-        margin: 0.25rem 0;
-        text-decoration: none;
-    }
+/* keep footer links readable */
+footer a {
+    display: block;
+    margin: 0.25rem 0;
+    text-decoration: none;
+}
 
-        footer a:hover {
-            text-decoration: underline;
-            color: #4CAF50;
-        }
+footer a:hover {
+    text-decoration: underline;
+    color: #4CAF50;
+}
