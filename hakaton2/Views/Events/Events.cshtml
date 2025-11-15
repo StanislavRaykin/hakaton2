@@ -55,16 +55,16 @@
     };
 
     var now = DateTime.Now;
-    // CAST Start/End explicitly to DateTime? so HasValue checks are safe even when runtime produced plain DateTime
     var eventsWithDates = items
-        .Select(i => new {
+        .Select(i => new
+        {
             Item = i,
             Title = GetString(i, new[] { "Title", "Name", "EventName" }),
             Description = GetString(i, new[] { "Description", "Summary", "Details" }),
             Start = (DateTime?)GetDate(i, new[] { "Start", "StartDate", "Date", "EventDate" }),
             End = (DateTime?)GetDate(i, new[] { "End", "EndDate", "Finish", "EndTime" })
         })
-        .Where(x => x.Start != null) // require a start date
+        .Where(x => x.Start != null)
         .ToList();
 
     var past = eventsWithDates
@@ -103,11 +103,13 @@
             }
             else
             {
+                var lastId = items.IndexOf(last.Item);
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">@last.Title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@last.Start.Value.ToString("f")@(last.End.HasValue ? " — " + last.End.Value.ToString("f") : "")</h6>
                         <p class="card-text">@last.Description</p>
+                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = lastId })">Прочети повече</a>
                     </div>
                 </div>
             }
@@ -126,11 +128,13 @@
             {
                 @foreach (var e in active)
                 {
+                    var id = items.IndexOf(e.Item);
                     <div class="card mb-2 border-success">
                         <div class="card-body">
                             <h5 class="card-title">@e.Title</h5>
                             <h6 class="card-subtitle mb-2 text-muted">@e.Start.Value.ToString("f")@(e.End.HasValue ? " — " + e.End.Value.ToString("f") : "")</h6>
                             <p class="card-text">@e.Description</p>
+                            <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = id })">Прочети повече</a>
                         </div>
                     </div>
                 }
@@ -151,6 +155,7 @@
                 <div class="list-group">
                     @foreach (var u in upcoming)
                     {
+                        var id = items.IndexOf(u.Item);
                         <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                             <div class="me-3">
                                 <div class="fw-bold">@u.Title</div>
@@ -159,6 +164,9 @@
                             </div>
                             <div class="text-end">
                                 <span class="badge bg-primary rounded-pill">@Math.Max(0, (u.Start.Value - now).Days) d</span>
+                                <div class="mt-2">
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", "Events", new { id = id })">Прочети повече</a>
+                                </div>
                             </div>
                         </div>
                     }
