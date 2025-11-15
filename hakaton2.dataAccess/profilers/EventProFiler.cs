@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace hakaton2.dataAccess.profilers
 {
-    internal class EventProFiler : Profile
+    public class EventProFiler : Profile
     {
         public EventProFiler()
         {
