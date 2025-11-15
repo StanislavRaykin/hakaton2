@@ -17,14 +17,13 @@ builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationSche
 builder.Services.AddDbContext<hakatonContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("hakatonContext")));
 
+builder.Services.AddAutoMapper(typeof(EventProFiler)); // scans profile and registers IMapper
+var mapperConfiguration = new MapperConfiguration(cfg => cfg.AddProfile(new EventProFiler()));
+IMapper mapper = mapperConfiguration.CreateMapper();
+builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<IEventManager, EventManager>();
 
-var mapperconfiguration = new MapperConfiguration(option =>
-{
- option.AddProfile(new EventProFiler());
-});
-
-var app = builder.Build();
+var app = builder.Build();  
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
