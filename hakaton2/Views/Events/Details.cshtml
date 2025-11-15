@@ -1,0 +1,32 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = (Model?.Title ?? "Event") + " - EcoPoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    DateTime? start = null, end = null;
+    try { start = Model?.Start; } catch { }
+    try { end = Model?.End; } catch { }
+}
+
+<div class="container my-5">
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="@Url.Action("Index","Events")" class="btn btn-sm btn-outline-secondary mb-3">← Back to events</a>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-success">@Model.Title</h2>
+                    @if (start != null)
+                    {
+                        <p class="text-muted">@start.Value.ToString("f")@(end != null ? " — " + end.Value.ToString("f") : "")</p>
+                    }
+                    <p>@Model.Description</p>
+
+                    <hr />
+                    <!-- Placeholder for extra details (location, organizer, images...) -->
+                    <p class="text-muted small">No additional details available in demo data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

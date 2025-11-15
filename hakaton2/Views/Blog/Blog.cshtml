@@ -1,6 +1,9 @@
 ﻿@using System.Linq
 @model IEnumerable<dynamic>
 
+
+
+
 @{
     ViewBag.Title = "Блог - EcoPoints";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,52 +25,114 @@
         }
         return string.Empty;
     }
+
+    // Simple helpers for rendering
+    string Truncate(string s, int len = 140) => string.IsNullOrEmpty(s) ? "" : (s.Length <= len ? s : s.Substring(0, len).TrimEnd() + "…");
 }
 
 <div class="container my-5">
-    <div class="text-center mb-4">
-        <h1 class="text-success">Блог на EcoPoints</h1>
-        <p class="lead text-muted">Истории, съвети и инициативи — вдъхновете се да рециклирате повече.</p>
-        <hr />
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="text-success mb-0">Блог</h1>
+            <small class="text-muted">Истории, съвети и новини от EcoPoints</small>
+        </div>
+        <div>
+            <a href="@Url.Action("Create", "Posts")" class="btn btn-sm btn-primary">Нова публикация</a>
+        </div>
     </div>
 
     <div class="row">
-        @if (!posts.Any())
-        {
-            <div class="col-12">
-                <div class="alert alert-secondary text-center">Все още няма публикации в блога.</div>
-            </div>
-        }
-        else
-        {
-            foreach (var post in posts)
+        <main class="col-lg-8">
+            @if (!posts.Any())
             {
-                var title = GetValue(post, new[] { "Title", "Name" });
-                var excerpt = GetValue(post, new[] { "Excerpt", "Summary", "Description" });
-                var slug = GetValue(post, new[] { "Slug", "Id" });
-                var date = GetValue(post, new[] { "Published", "Date" });
-                var img = GetValue(post, new[] { "ImageUrl", "Image", "Thumbnail" }) ?? "/images/blog/default.jpg";
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 shadow-sm">
+                <div class="alert alert-info">Все още няма публикации.</div>
+            }
+            else
+            {
+                @foreach (var post in posts)
+                {
+                    var title = GetValue(post, new[] { "Title", "Name" }) ?? "Без заглавие";
+                    var excerpt = GetValue(post, new[] { "Excerpt", "Summary", "Description" });
+                    var content = GetValue(post, new[] { "Content", "ContentHtml" });
+                    var slug = GetValue(post, new[] { "Slug", "Id" });
+                    var date = GetValue(post, new[] { "Published", "Date" });
+                    var img = GetValue(post, new[] { "ImageUrl", "Image", "Thumbnail" }) ?? "/images/blog/default.jpg";
+                    <article class="card mb-4">
                         <div class="row g-0">
-                            <div class="col-4 d-none d-md-block">
-                                <img src="@img" class="img-fluid rounded-start h-100" style="object-fit:cover;" alt="@title" />
+                            <div class="col-md-4 d-none d-md-block">
+                                <img src="@img" class="img-fluid h-100" style="object-fit:cover;" alt="@title" />
                             </div>
                             <div class="col">
                                 <div class="card-body">
-                                    <h5 class="card-title">@title</h5>
+                                    <h3 class="h5 mb-1">@title</h3>
                                     @if (!string.IsNullOrWhiteSpace(date))
                                     {
-                                        <p class="text-muted small mb-2">@date</p>
+                                        <small class="text-muted">@date</small>
                                     }
-                                    <p class="card-text">@excerpt</p>
+                                    <p class="mt-2 mb-3">@Truncate(!string.IsNullOrEmpty(excerpt) ? excerpt : content, 200)</p>
                                     <a href="@Url.Action("Post", "Blog", new { slug = slug })" class="btn btn-sm btn-outline-success">Прочети повече</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </article>
+                }
             }
-        }
+
+            <!-- simple pagination placeholder -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled"><a class="page-link" href="#">←</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">→</a></li>
+                </ul>
+            </nav>
+        </main>
+
+        <aside class="col-lg-4">
+            <div class="card mb-3 p-3">
+                <h6 class="mb-2 text-success">Търсене</h6>
+                <form method="get" action="@Url.Action("Search", "Blog")">
+                    <div class="input-group">
+                        <input name="q" class="form-control form-control-sm" placeholder="Търси в блога..." />
+                        <button class="btn btn-sm btn-success" type="submit">Търси</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card mb-3 p-3">
+                <h6 class="mb-2 text-success">Категории</h6>
+                <ul class="list-unstyled mb-0">
+                    <li><a href="@Url.Action("Index", "Blog", new { category = "Съвети" })" class="text-decoration-none">Съвети</a></li>
+                    <li><a href="@Url.Action("Index", "Blog", new { category = "Кампании" })" class="text-decoration-none">Кампании</a></li>
+                    <li><a href="@Url.Action("Index", "Blog", new { category = "Новини" })" class="text-decoration-none">Новини</a></li>
+                </ul>
+            </div>
+
+            <div class="card p-3">
+                <h6 class="mb-2 text-success">Последни публикации</h6>
+                <ul class="list-unstyled mb-0">
+                    @{
+                        foreach (var recent in posts.Take(4))
+                        {
+                            var rtitle = GetValue(recent, new[] { "Title", "Name" });
+                            var rslug = GetValue(recent, new[] { "Slug", "Id" });
+                            <li class="mb-2">
+                                <a href="@Url.Action("Post", "Blog", new { slug = rslug })" class="text-decoration-none">@rtitle</a>
+                            </li>
+                        }
+                        if (!posts.Any())
+                        {
+                            <li class="text-muted">Няма публикации</li>
+                            ;
+                        }
+                    }
+                </ul>
+            </div>
+        </aside>
     </div>
 </div>
+
+                              
+ 
