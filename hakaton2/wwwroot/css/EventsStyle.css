@@ -15,7 +15,7 @@ html {
 }
 
 html {
-  position: center;
+  position: relative;
   min-height: 100%;
 }
 

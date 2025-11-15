@@ -15,7 +15,7 @@ namespace hakaton2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Views/Home/Index.cshtml");
         }
 
         public IActionResult About()
@@ -28,10 +28,11 @@ namespace hakaton2.Controllers
             return View("/Views/Leaderboard/Leaderboard.cshtml");
         }
 
-        public IActionResult Privacy()
+        public IActionResult Events()
         {
-            return View();
+            return View("/Views/Events/Events.cshtml");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
