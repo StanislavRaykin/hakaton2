@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Leaderboard\" />
     <Folder Include="Views\NewFolder - Copy %282%29\" />
     <Folder Include="Views\NewFolder - Copy\" />
     <Folder Include="Views\NewFolder\" />
