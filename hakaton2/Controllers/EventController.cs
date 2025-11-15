@@ -1,4 +1,5 @@
 ﻿using hakaton2.dataAccess.Entities;
+using hakaton2.dataAccess.Interfaces;
 using hakaton2.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,11 @@ namespace hakaton2.Controllers
 {
     public class EventController : Controller
     {
+        private readonly IEventManager _eventManager;
+        public EventController(IEventManager eventManager) 
+        { 
+        _eventManager = eventManager;
+        }
 
         [HttpGet]
         public IActionResult RequestEvent()
@@ -36,7 +42,7 @@ namespace hakaton2.Controllers
                 ModelState.AddModelError("", "Няма въведена локация!");
                 return View();
             }
-
+            _eventManager.Create(requesteventVM);
             //Event event = RequestEventViewModel.RequestEventVMToTrack(requesteventVM);
             //db.Events.Add(event);
             //db.SaveChanges();
