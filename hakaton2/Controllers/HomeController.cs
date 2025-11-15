@@ -33,6 +33,16 @@ namespace hakaton2.Controllers
             return View("/Views/Events/Events.cshtml");
         }
 
+        public IActionResult Login()
+        {
+            return View("/Views/User/Registration.cshtml");
+        }
+
+        public IActionResult Registration()
+        {
+            return View("/Views/User/Registration.cshtml");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
