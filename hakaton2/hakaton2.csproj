@@ -7,8 +7,92 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder - Copy %282%29\**" />
+    <Compile Remove="Views\NewFolder - Copy\**" />
+    <Compile Remove="Views\NewFolder\**" />
+    <Content Remove="Views\NewFolder - Copy %282%29\**" />
+    <Content Remove="Views\NewFolder - Copy\**" />
+    <Content Remove="Views\NewFolder\**" />
+    <EmbeddedResource Remove="Views\NewFolder - Copy %282%29\**" />
+    <EmbeddedResource Remove="Views\NewFolder - Copy\**" />
+    <EmbeddedResource Remove="Views\NewFolder\**" />
+    <None Remove="Views\NewFolder - Copy %282%29\**" />
+    <None Remove="Views\NewFolder - Copy\**" />
+    <None Remove="Views\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.3.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\hakaton2.dataAccess\hakaton2.dataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\IndexContent\3dslider.css" />
+    <None Include="wwwroot\css\IndexContent\animate.css" />
+    <None Include="wwwroot\css\IndexContent\bootstrap-theme.css" />
+    <None Include="wwwroot\css\IndexContent\bootstrap-theme.css.map" />
+    <None Include="wwwroot\css\IndexContent\bootstrap-theme.min.css" />
+    <None Include="wwwroot\css\IndexContent\bootstrap-theme.min.css.map" />
+    <None Include="wwwroot\css\IndexContent\bootstrap.css" />
+    <None Include="wwwroot\css\IndexContent\bootstrap.css.map" />
+    <None Include="wwwroot\css\IndexContent\bootstrap.min.css" />
+    <None Include="wwwroot\css\IndexContent\bootstrap.min.css.map" />
+    <None Include="wwwroot\css\IndexContent\custom.css" />
+    <None Include="wwwroot\css\IndexContent\flaticon.css" />
+    <None Include="wwwroot\css\IndexContent\font-awesome.css" />
+    <None Include="wwwroot\css\IndexContent\font-awesome.min.css" />
+    <None Include="wwwroot\css\IndexContent\owl.carousel.css" />
+    <None Include="wwwroot\css\IndexContent\prettyPhoto.css" />
+    <None Include="wwwroot\css\IndexContent\responsive.css" />
+    <None Include="wwwroot\fonts\flaticon.css" />
+    <None Include="wwwroot\fonts\Flaticon.eot" />
+    <None Include="wwwroot\fonts\flaticon.html" />
+    <None Include="wwwroot\fonts\Flaticon.svg" />
+    <None Include="wwwroot\fonts\Flaticon.ttf" />
+    <None Include="wwwroot\fonts\Flaticon.woff" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\fonts\_flaticon.scss" />
+    <None Include="wwwroot\js\IndexScripts\3dslider.js" />
+    <None Include="wwwroot\js\IndexScripts\all.js" />
+    <None Include="wwwroot\js\IndexScripts\animate.js" />
+    <None Include="wwwroot\js\IndexScripts\custom.js" />
+    <None Include="wwwroot\js\IndexScripts\hoverdir.js" />
+    <None Include="wwwroot\js\IndexScripts\jquery.prettyPhoto.js" />
+    <None Include="wwwroot\js\IndexScripts\jquery.vide.js" />
+    <None Include="wwwroot\js\IndexScripts\map.js" />
+    <None Include="wwwroot\js\IndexScripts\modernizer.js" />
+    <None Include="wwwroot\js\IndexScripts\owl.carousel.js" />
+    <None Include="wwwroot\js\IndexScripts\portfolio.js" />
+    <None Include="wwwroot\js\IndexScripts\retina.js" />
+    <None Include="wwwroot\js\IndexScripts\scroll.js" />
   </ItemGroup>
 
 </Project>
