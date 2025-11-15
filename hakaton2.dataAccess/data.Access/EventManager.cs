@@ -22,6 +22,9 @@ namespace hakaton2.dataAccess.data.Access
         public async Task Create(RequestEventViewModel requesteventVM)
         {
             Event eventDb = _mapper.Map<Event>(requesteventVM);
+            eventDb.Start = DateTime.Now;
+            eventDb.End = DateTime.Now;
+            eventDb.CreatedOn = DateTime.Now;
             await _hacatoncontext.Events.AddAsync(eventDb);
             await _hacatoncontext.SaveChangesAsync();
         }

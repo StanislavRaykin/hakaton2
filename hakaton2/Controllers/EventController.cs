@@ -20,7 +20,7 @@ namespace hakaton2.Controllers
         }
 
         [HttpPost]
-        public IActionResult RequestEvent(RequestEventViewModel requesteventVM)
+        public async Task<IActionResult> RequestEvent(RequestEventViewModel requesteventVM)
         {
             if (!ModelState.IsValid)
                 return View(requesteventVM);
@@ -42,11 +42,11 @@ namespace hakaton2.Controllers
                 ModelState.AddModelError("", "Няма въведена локация!");
                 return View();
             }
-            _eventManager.Create(requesteventVM);
+            await _eventManager.Create(requesteventVM);
             //Event event = RequestEventViewModel.RequestEventVMToTrack(requesteventVM);
             //db.Events.Add(event);
             //db.SaveChanges();
-            return RedirectToAction("View");
+            return RedirectToAction("Index", "Events");
         }
     }
 }

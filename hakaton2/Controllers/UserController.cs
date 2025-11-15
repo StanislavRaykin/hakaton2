@@ -32,7 +32,7 @@ namespace hakaton2.Controllers
             bool success = await _userManager.Login(login);
             if (success)
             {
-               Tem
+               
             }
             // TODO: authenticate user against your user store
             return RedirectToAction("Index", "Home");
