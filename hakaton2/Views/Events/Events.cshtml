@@ -55,19 +55,20 @@
     };
 
     var now = DateTime.Now;
+    // CAST Start/End explicitly to DateTime? so HasValue checks are safe even when runtime produced plain DateTime
     var eventsWithDates = items
         .Select(i => new {
             Item = i,
             Title = GetString(i, new[] { "Title", "Name", "EventName" }),
             Description = GetString(i, new[] { "Description", "Summary", "Details" }),
-            Start = GetDate(i, new[] { "Start", "StartDate", "Date", "EventDate" }),
-            End = GetDate(i, new[] { "End", "EndDate", "Finish", "EndTime" })
+            Start = (DateTime?)GetDate(i, new[] { "Start", "StartDate", "Date", "EventDate" }),
+            End = (DateTime?)GetDate(i, new[] { "End", "EndDate", "Finish", "EndTime" })
         })
-        .Where(x => x.Start.HasValue) // require a start date
+        .Where(x => x.Start != null) // require a start date
         .ToList();
 
     var past = eventsWithDates
-        .Where(x => x.End.HasValue ? x.End.Value < now : x.Start.Value < now)
+        .Where(x => (x.End.HasValue ? x.End.Value < now : x.Start.Value < now))
         .OrderByDescending(x => x.Start)
         .ToList();
 
