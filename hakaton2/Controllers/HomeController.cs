@@ -18,7 +18,7 @@ namespace hakaton2.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public ViewResult About()
         {
             return View();
         }
