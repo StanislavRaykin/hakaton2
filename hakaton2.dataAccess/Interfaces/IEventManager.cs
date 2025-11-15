@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace hakaton2.dataAccess.Interfaces
 {
-    internal interface IEventManager
+    public interface IEventManager
     {
         Task Create(RequestEventViewModel requesteventVM);
     }

@@ -1,7 +1,7 @@
 ﻿@model hakaton2.Models.RequestEventViewModel
 
 @{
-    ViewBag.Title = "Заявка за рециклиращ евент";
+    ViewBag.Title = "RequestEvent";
 }
 
 @{
@@ -17,7 +17,7 @@
 <div class="register-container">
     <h2>Заявка за рециклиращ евент</h2>
 
-    <@* form *@ @* asp-action="SubmitRecyclingEvent" asp-controller="Recycling" method="post"> *@
+    <form asp-action="RequestEvent" asp-controller="Event" method="post">
 
         <div class="form-group">
             <label>Заглавие на евента</label>
@@ -38,3 +38,5 @@
         </div>
 
         <button type="submit" class="btn-register">Изпрати заявка</button>
+    </form>
+</div>

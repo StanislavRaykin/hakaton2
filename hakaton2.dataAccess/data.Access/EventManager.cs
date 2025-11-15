@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace hakaton2.dataAccess.data.Access
 {
-    internal class EventManager : IEventManager
+    public class EventManager : IEventManager
     {
         private readonly IMapper _mapper;
         private readonly hakatonContext _hacatoncontext;

@@ -13,9 +13,10 @@ namespace hakaton2.Controllers
             _logger = logger;
         }
 
+        // Use default view resolution (Views/Home/Index.cshtml)
         public IActionResult Index()
         {
-            return View("Views/Home/Index.cshtml");
+            return View();
         }
 
         public IActionResult About()

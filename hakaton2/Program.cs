@@ -1,4 +1,8 @@
+using AutoMapper;
+using hakaton2.dataAccess.data.Access;
 using hakaton2.dataAccess.Entities;
+using hakaton2.dataAccess.Interfaces;
+using hakaton2.dataAccess.profilers;
 using Microsoft.AspNetCore.Builder;
 
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +16,13 @@ builder.Services.AddAuthentication().AddCookie(IdentityConstants.ApplicationSche
 
 builder.Services.AddDbContext<hakatonContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("hakatonContext")));
+
+builder.Services.AddScoped<IEventManager, EventManager>();
+
+var mapperconfiguration = new MapperConfiguration(option =>
+{
+ option.AddProfile(new EventProFiler());
+});
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
