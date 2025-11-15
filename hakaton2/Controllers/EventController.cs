@@ -19,13 +19,13 @@ namespace hakaton2.Controllers
             if (!ModelState.IsValid)
                 return View(requesteventVM);
 
-            if (requesteventVM.CreaterName == null)
+            if (requesteventVM.Creator == null)
             {
                 ModelState.AddModelError("", "Няма въведен име на създател!");
                 return View();
             }
 
-            if (requesteventVM.EventName == null)
+            if (requesteventVM.Title == null)
             {
                 ModelState.AddModelError("", "Няма въведен име на евент!");
                 return View();
