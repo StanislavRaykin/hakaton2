@@ -11,79 +11,6 @@
         .OrderBy(e => e.Start)
         .ToList();//currently active eventss
 
-    // var source = Model ?? (ViewData["Events"] as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
-    // var items = source.ToList();
-
-    // Func<dynamic, string[], string> GetString = (item, names) =>
-    // {
-    //     if (item == null) return string.Empty;
-    //     var t = item.GetType();
-    //     foreach (var n in names)
-    //     {
-    //         var prop = t.GetProperty(n);
-    //         if (prop != null) { var v = prop.GetValue(item); return v?.ToString() ?? string.Empty; }
-    //         var field = t.GetField(n);
-    //         if (field != null) { var v = field.GetValue(item); return v?.ToString() ?? string.Empty; }
-    //         if (item is IDictionary dict && dict.Contains(n)) { var v = dict[n]; return v?.ToString() ?? string.Empty; }
-    //     }
-    //     return string.Empty;
-    // };
-
-    // Func<dynamic, string[], DateTime?> GetDate = (item, names) =>
-    // {
-    //     if (item == null) return null;
-    //     var t = item.GetType();
-    //     foreach (var n in names)
-    //     {
-    //         var prop = t.GetProperty(n);
-    //         if (prop != null)
-    //         {
-    //             var v = prop.GetValue(item);
-    //             if (v is DateTime dt) return dt;
-    //             if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
-    //         }
-    //         var field = t.GetField(n);
-    //         if (field != null)
-    //         {
-    //             var v = field.GetValue(item);
-    //             if (v is DateTime dt) return dt;
-    //             if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
-    //         }
-    //         if (item is IDictionary dict && dict.Contains(n))
-    //         {
-    //             var v = dict[n];
-    //             if (v is DateTime dt) return dt;
-    //             if (DateTime.TryParse(v?.ToString(), out DateTime parsed)) return parsed;
-    //         }
-    //     }
-    //     return null;
-    // };
-
-    // var now = DateTime.Now;
-    // var eventsWithDates = items
-    //     .Select(i => new
-    //     {
-    //         Item = i,
-    //         Title = GetString(i, new[] { "Title", "Name", "EventName" }),
-    //         Description = GetString(i, new[] { "Description", "Summary", "Details" }),
-    //         Start = (DateTime?)GetDate(i, new[] { "Start", "StartDate", "Date", "EventDate" }),
-    //         End = (DateTime?)GetDate(i, new[] { "End", "EndDate", "Finish", "EndTime" })
-    //     })
-    //     .Where(x => x.Start != null)
-    //     .ToList();
-
-    // var past = eventsWithDates
-    //     .Where(x => (x.End.HasValue ? x.End.Value < now : x.Start.Value < now))
-    //     .OrderByDescending(x => x.Start)
-    //     .ToList();
-
-    // var last = past.FirstOrDefault();
-
-    // var active = eventsWithDates
-    //     .Where(x => x.Start <= now && (x.End == null || x.End >= now))
-    //     .OrderBy(x => x.Start)
-    //     .ToList();
-
     var upcoming = Model
         .Where(x => x.Start > DateTime.Now)
         .OrderBy(x => x.Start)
@@ -113,7 +40,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@last.Title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">@last.Start.Value.ToString("f")@(last.End.HasValue ? " — " + last.End.Value.ToString("f") : "")</h6>
-                        <p class="card-text">@last.Description</p>
+                        <p class="card-text">@last.CurrentParticipants / @last.MaxParticipants</p>
                         <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = last.EventId })">Прочети повече</a>
                     </div>
                 </div>

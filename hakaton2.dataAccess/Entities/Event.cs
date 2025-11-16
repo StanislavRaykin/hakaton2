@@ -20,6 +20,9 @@ public partial class Event
     [StringLength(255)]
     public string Description { get; set; }
 
+    [StringLength(50)]
+    public string Location { get; set; }
+
     [Column(TypeName = "datetime")]
     public DateTime? Start { get; set; }
 

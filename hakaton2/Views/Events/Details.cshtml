@@ -20,11 +20,10 @@
                     {
                         <p class="text-muted">@start.Value.ToString("f")@(end != null ? " — " + end.Value.ToString("f") : "")</p>
                     }
-                    <p>@Model.Description</p>
+                    <p>@Model.Location</p>
 
                     <hr />
-                    <!-- Placeholder for extra details (location, organizer, images...) -->
-                    <p class="text-muted small">No additional details available in demo data.</p>
+                    <p class="text-muted small">@Model.Description</p>
                 </div>
             </div>
         </div>
