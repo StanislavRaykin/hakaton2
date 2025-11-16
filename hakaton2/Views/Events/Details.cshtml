@@ -24,8 +24,58 @@
 
                     <hr />
                     <p class="text-muted small">@Model.Description</p>
+                    <!-- Join / Increment participant button: posts to EventsController.IncrementParticipant -->
+                    @if (Model != null)
+                    {
+                        @* Optional success message from controller *@
+                       
+
+                        <form method="post" action='@Url.Action("IncrementParticipant", "Event")' class="d-inline-block">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="eventId" value="@Model.EventId" />
+                            <button type="submit" class="btn btn-success" onclick="return confirm('Сигурни ли сте, че искате да се присъедините към това събитие?')">Присъедини се към събитието</button>
+                        </form>
+
+                        @* Optional: a cancel / share button *@
+                        <a href="@Url.Action("Index","Events")" class="btn btn-outline-secondary ms-2">Откажи</a>
+                    }
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@* PSEUDOCODE / PLAN:
+   - Read TempData["JoinResult"] which contains the boolean result from the POST action.
+   - If TempData["JoinResult"] exists:
+       - Safely convert it to bool.
+       - If true -> render a success alert "Успешно се присъединихте към събитието."
+       - If false -> render a danger alert "Събитието е пълно."
+   - If TempData["JoinResult"] is not present but TempData["JoinSuccess"] exists (legacy), render that message as success.
+   - Then render the join form unchanged (anti-forgery, hidden eventId, confirm on click).
+*@
+
+@{
+    // Safely extract possible TempData results
+    object joinResultObj = TempData["JoinResult"];
+    bool? joinResultBool = null;
+    if (joinResultObj != null)
+    {
+        try { joinResultBool = Convert.ToBoolean(joinResultObj); } catch { joinResultBool = null; }
+    }
+}
+
+@if (joinResultBool != null)
+{
+    if (joinResultBool.Value)
+    {
+        <div class="alert alert-success">Успешно се присъединихте към събитието.</div>
+    }
+    else
+    {
+        <div class="alert alert-danger">Събитието е пълно.</div>
+    }
+}
+
+

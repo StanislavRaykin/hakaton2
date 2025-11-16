@@ -71,4 +71,5 @@ ON [PRIMARY]
 ) ON [PRIMARY];
 GO
 
+
 PRINT 'Tables re-created successfully.';        

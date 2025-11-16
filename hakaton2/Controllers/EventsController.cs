@@ -43,5 +43,6 @@ namespace hakaton2.Controllers
             var ev = await _eventManager.GetOne(id);
             return View("~/Views/Events/Details.cshtml", ev);
         }
+
     }
 }

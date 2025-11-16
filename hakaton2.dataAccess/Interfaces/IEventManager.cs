@@ -11,7 +11,7 @@ namespace hakaton2.dataAccess.Interfaces
     public interface IEventManager
     {
         Task Create(RequestEventViewModel requesteventVM);
-
+        Task<bool> IncrementParticipant(int eventId);
         Task<List<EventViewModel>> GetAllEvents();
 
         Task<EventViewModel> GetOne(int id);
