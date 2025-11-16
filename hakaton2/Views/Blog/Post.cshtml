@@ -1,0 +1,42 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = (Model?.Title ?? "Публикация") + " - EcoPoints";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var title = Model?.Title ?? "Без заглавие";
+    var date = Model?.Published?.ToString("D") ?? Model?.Date ?? "";
+    var image = Model?.ImageUrl ?? Model?.Image ?? "/images/blog/default.jpg";
+    var excerpt = Model?.Excerpt ?? Model?.Summary ?? "";
+    var contentHtml = Model?.ContentHtml ?? Model?.Content ?? "";
+
+    // Show the specific Bulgarian guidance for the dedicated "first" post (or when content is empty)
+    if (string.IsNullOrWhiteSpace(contentHtml) || (Model?.Slug?.ToString() == "podgotovka-plastmasa-efektivno"))
+    {
+        contentHtml = "<p>За да осигурите успешно рециклиране на пластмасата, е задължително първо да изпразните опаковките напълно. Ако са съдържали храна или течности, изплакнете ги леко с вода. След това смачкайте бутилките, за да намалите техния обем, и затворете капачките им. Накрая, изхвърлете подготвената пластмаса в жълтия контейнер за разделно събиране.</p>";
+    }
+}
+
+<div class="container my-5">
+    <a href="@Url.Action("Index", "Blog")" class="btn btn-sm btn-outline-secondary mb-3">← Back to Blog</a>
+
+    <div class="card">
+        <img src="@image" class="card-img-top" style="object-fit:cover; max-height:420px;" alt="@title" />
+        <div class="card-body">
+            <h1 class="h3 text-success">@title</h1>
+            @if (!string.IsNullOrWhiteSpace(date))
+            {
+                <p class="text-muted mb-2">@date</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(excerpt))
+            {
+                <p class="lead">@excerpt</p>
+            }
+
+            <hr />
+
+            <div class="post-content">
+                @Html.Raw(contentHtml)
+            </div>
+        </div>
+    </div>
+
+    
