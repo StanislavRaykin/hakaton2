@@ -88,6 +88,12 @@
         .Where(x => x.Start > DateTime.Now)
         .OrderBy(x => x.Start)
         .ToList();
+
+    var past = Model
+       .Where(x => x.End < DateTime.Now)
+       .OrderBy(x => x.Start)
+       .ToList();
+
 }
 
 <div class="container mt-5">
@@ -98,28 +104,7 @@
         </div>
     </div>
 
-    <!-- Last event (stacked) -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <h4>Последното събитие:</h4>
-            @if (!Model.Any())
-            {
-                <div class="alert alert-secondary">Няма събития.</div>
-            }
-            else
-            {
-                var last = Model.First();
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">@last.Title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@last.Start.Value.ToString("f")@(last.End.HasValue ? " — " + last.End.Value.ToString("f") : "")</h6>
-                        <p class="card-text">@last.Description</p>
-                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = last.EventId })">Прочети повече</a>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
+   
 
     <!-- Active events (stacked) -->
     <div class="row mb-4">
@@ -160,6 +145,37 @@
             {
                 <div class="list-group">
                     @foreach (var u in upcoming)
+                    {
+                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                            <div class="me-3">
+                                <div class="fw-bold">@u.Title</div>
+                                <small class="text-muted">@u.Start.Value.ToString("f")@(u.End.HasValue ? " — " + u.End.Value.ToString("f") : "")</small>
+                                <div class="small mt-1">@u.Description</div>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge bg-primary rounded-pill">@Math.Max(0, (u.Start.Value - DateTime.Now).Days) d</span>
+                                <div class="mt-2">
+                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", "Events", new { id = u.EventId })">Прочети повече</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4>Минали събития</h4>
+            @if (!past.Any())
+            {
+                <div class="alert alert-secondary">Няма събития.</div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var u in past)
                     {
                         <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                             <div class="me-3">
