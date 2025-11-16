@@ -20,7 +20,7 @@ namespace hakaton2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RequestEvent(RequestEventViewModel requesteventVM)
+        public async Task<IActionResult> RequestEvent(RequestEventViewModel requesteventVM) // creates an event
         {
             if (!ModelState.IsValid)
                 return View(requesteventVM);
