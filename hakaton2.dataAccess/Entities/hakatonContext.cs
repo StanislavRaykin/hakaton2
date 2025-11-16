@@ -19,11 +19,6 @@ public partial class hakatonContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Event>(entity =>
-        {
-            entity.Property(e => e.EventId).ValueGeneratedNever();
-        });
-
         OnModelCreatingPartial(modelBuilder);
     }
 

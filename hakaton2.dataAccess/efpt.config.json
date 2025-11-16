@@ -19,7 +19,7 @@
    "T4TemplatePath": null,
    "Tables": [
       {
-         "Name": "[dbo].[Events]",
+         "Name": "[dbo].[Event]",
          "ObjectType": 0
       },
       {

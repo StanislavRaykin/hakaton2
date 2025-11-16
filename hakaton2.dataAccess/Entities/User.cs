@@ -12,20 +12,18 @@ namespace hakaton2.dataAccess.Entities;
 public partial class User
 {
     [Key]
+    [Column("UserID")]
     public int UserId { get; set; }
 
-    [Required]
-    [StringLength(100)]
+    [StringLength(20)]
     public string Username { get; set; }
 
-    [Required]
-    [StringLength(150)]
+    [StringLength(50)]
     public string Email { get; set; }
 
     public int? Points { get; set; }
 
     public int? Role { get; set; }
 
-    [Required]
     public string Password { get; set; }
 }

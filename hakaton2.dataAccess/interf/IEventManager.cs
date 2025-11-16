@@ -16,6 +16,6 @@ namespace hakaton2.dataAccess.interf
     {
         public Task Login(UserLoginViewModel vm);
 
-        public Task Create();
+        public Task Create(Event a);
     }
 }

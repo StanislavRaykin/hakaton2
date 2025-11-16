@@ -8,34 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hakaton2.dataAccess.Entities;
 
+[Table("Event")]
 public partial class Event
 {
     [Key]
-    [Column("eventID")]
     public int EventId { get; set; }
 
-    [Column("title")]
-    [StringLength(150)]
+    [StringLength(50)]
     public string Title { get; set; }
 
-    [Column("description")]
+    [StringLength(255)]
     public string Description { get; set; }
 
-    [Column("start", TypeName = "datetime")]
-    public DateTime Start { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? Start { get; set; }
 
-    [Column("end", TypeName = "datetime")]
-    public DateTime End { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? End { get; set; }
 
-    [Column("organizerId")]
-    public int OrganizerId { get; set; }
-
-    [Column("maxParticipants")]
     public int? MaxParticipants { get; set; }
 
-    [Column("currentParticipants")]
     public int? CurrentParticipants { get; set; }
 
-    [Column("createdOn", TypeName = "datetime")]
+    [Column(TypeName = "datetime")]
     public DateTime? CreatedOn { get; set; }
 }
