@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/hakaton2/appsettings.json
+/hakaton2/appsettings.json
