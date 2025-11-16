@@ -64,61 +64,55 @@
     <div class="row mb-4">
         <div class="col-12">
             <h4>Предстоящи събития</h4>
+
             @if (!upcoming.Any())
             {
-                <div class="alert alert-secondary">Няма събития.</div>
+                <div class="alert alert-secondary">Няма предстоящи събития.</div>
             }
             else
             {
-                <div class="list-group">
-                    @foreach (var u in upcoming)
-                    {
-                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                            <div class="me-3">
-                                <div class="fw-bold">@u.Title</div>
-                                <small class="text-muted">@u.Start.Value.ToString("f")@(u.End.HasValue ? " — " + u.End.Value.ToString("f") : "")</small>
-                                <div class="small mt-1">@u.Description</div>
-                            </div>
-                            <div class="text-end">
-                                <span class="badge bg-primary rounded-pill">@Math.Max(0, (u.Start.Value - DateTime.Now).Days) d</span>
-                                <div class="mt-2">
-                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", "Events", new { id = u.EventId })">Прочети повече</a>
-                                </div>
-                            </div>
+                @foreach (var e in upcoming)
+                {
+
+                    <div class="card mb-2 border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">@e.Title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@e.Start.Value.ToString("f")@(e.End.HasValue ? " — " + e.End.Value.ToString("f") : "")</h6>
+                            <p class="card-text">@e.CurrentParticipants / @e.MaxParticipants участници</p>
+                            <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = e.EventId })">Прочети повече</a>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             }
         </div>
     </div>
 
+
+
+
+
     <div class="row mb-4">
         <div class="col-12">
             <h4>Минали събития</h4>
+
             @if (!past.Any())
             {
                 <div class="alert alert-secondary">Няма събития.</div>
             }
             else
             {
-                <div class="list-group">
-                    @foreach (var u in past)
-                    {
-                        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                            <div class="me-3">
-                                <div class="fw-bold">@u.Title</div>
-                                <small class="text-muted">@u.Start.Value.ToString("f")@(u.End.HasValue ? " — " + u.End.Value.ToString("f") : "")</small>
-                                <div class="small mt-1">@u.Description</div>
-                            </div>
-                            <div class="text-end">
-                                <span class="badge bg-primary rounded-pill">@Math.Max(0, (u.Start.Value - DateTime.Now).Days) d</span>
-                                <div class="mt-2">
-                                    <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", "Events", new { id = u.EventId })">Прочети повече</a>
-                                </div>
-                            </div>
+                @foreach (var e in past)
+                {
+
+                    <div class="card mb-2 border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">@e.Title</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@e.Start.Value.ToString("f")@(e.End.HasValue ? " — " + e.End.Value.ToString("f") : "")</h6>
+                            <p class="card-text">@e.CurrentParticipants / @e.MaxParticipants участници</p>
+                            <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = e.EventId })">Прочети повече</a>
                         </div>
-                    }
-                </div>
+                    </div>
+                }
             }
         </div>
     </div>
