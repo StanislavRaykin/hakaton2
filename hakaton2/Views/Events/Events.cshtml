@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@e.Title</h5>
                             <h6 class="card-subtitle mb-2 text-muted">@e.Start.Value.ToString("f")@(e.End.HasValue ? " — " + e.End.Value.ToString("f") : "")</h6>
-                             <p class="card-text">@last.CurrentParticipants / @last.MaxParticipants</p>
+                             <p class="card-text">@e.CurrentParticipants / @e.MaxParticipants участници</p>
                             <a class="btn btn-sm btn-outline-success" href="@Url.Action("Details", "Events", new { id = e.EventId })">Прочети повече</a>
                         </div>
                     </div>
