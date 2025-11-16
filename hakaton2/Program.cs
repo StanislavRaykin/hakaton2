@@ -24,16 +24,11 @@ builder.Services.AddDbContext<hakatonContext>(options =>
 
 
 builder.Services.AddAutoMapper(typeof(EventProFiler)); // scans profile and registers IMapper
-MapperConfiguration mapperConfiguration = new(cfg => cfg.AddProfile(new EventProFiler()));
-IMapper mapper = mapperConfiguration.CreateMapper();
-builder.Services.AddSingleton(mapper);
+
 builder.Services.AddScoped<IEventManager, EventManager>();
 
-var mapperconfiguration = new MapperConfiguration(option =>
-{
- option.AddProfile<EventProFiler>();
-});
-builder.Services.AddScoped<IMapper>(_ => mapperconfiguration.CreateMapper());
+builder.Services.AddAutoMapper(typeof(BlogProfiler)); // scans profile and registers IMapper
+builder.Services.AddScoped<IBlogManager, BlogManager>();
 
 var app = builder.Build();
   

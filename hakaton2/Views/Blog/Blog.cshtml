@@ -1,5 +1,5 @@
 ﻿@using System.Linq
-@model IEnumerable<dynamic>
+@model List<hakaton2.Models.Models.BlogViewModel>
 
 
 
@@ -8,26 +8,7 @@
     ViewBag.Title = "Блог - EcoPoints";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var source = Model ?? (ViewData["Posts"] as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
-    var posts = source.ToList();
-
-    string GetValue(dynamic item, string[] names)
-    {
-        if (item == null) return string.Empty;
-        var t = item.GetType();
-        foreach (var n in names)
-        {
-            var prop = t.GetProperty(n);
-            if (prop != null) { var v = prop.GetValue(item); return v?.ToString() ?? string.Empty; }
-            var field = t.GetField(n);
-            if (field != null) { var v = field.GetValue(item); return v?.ToString() ?? string.Empty; }
-            if (item is System.Collections.IDictionary dict && dict.Contains(n)) { var v = dict[n]; return v?.ToString() ?? string.Empty; }
-        }
-        return string.Empty;
-    }
-
-    // Simple helpers for rendering
-    string Truncate(string s, int len = 140) => string.IsNullOrEmpty(s) ? "" : (s.Length <= len ? s : s.Substring(0, len).TrimEnd() + "…");
+    
 }
 
 <div class="container my-5">
@@ -43,34 +24,21 @@
 
     <div class="row">
         <main class="col-lg-8">
-            @if (!posts.Any())
+            @if (!Model.Any())
             {
                 <div class="alert alert-info">Все още няма публикации.</div>
             }
             else
             {
-                @foreach (var post in posts)
+                @foreach (var post in Model)
                 {
-                    var title = GetValue(post, new[] { "Title", "Name" }) ?? "Без заглавие";
-                    var excerpt = GetValue(post, new[] { "Excerpt", "Summary", "Description" });
-                    var content = GetValue(post, new[] { "Content", "ContentHtml" });
-                    var slug = GetValue(post, new[] { "Slug", "Id" });
-                    var date = GetValue(post, new[] { "Published", "Date" });
-                    var img = GetValue(post, new[] { "ImageUrl", "Image", "Thumbnail" }) ?? "/images/blog/default.jpg";
                     <article class="card mb-4">
                         <div class="row g-0">
-                            <div class="col-md-4 d-none d-md-block">
-                                <img src="@img" class="img-fluid h-100" style="object-fit:cover;" alt="@title" />
-                            </div>
                             <div class="col">
                                 <div class="card-body">
-                                    <h3 class="h5 mb-1">@title</h3>
-                                    @if (!string.IsNullOrWhiteSpace(date))
-                                    {
-                                        <small class="text-muted">@date</small>
-                                    }
-                                    <p class="mt-2 mb-3">@Truncate(!string.IsNullOrEmpty(excerpt) ? excerpt : content, 200)</p>
-                                    <a href="@Url.Action("Post", "Blog", new { slug = slug })" class="btn btn-sm btn-outline-success">Прочети повече</a>
+                                    <h3 class="h5 mb-1">@post.Title</h3>
+                                        <small class="text-muted">@post.Published</small>
+                                    @Html.Raw(post.ContentHtml)
                                 </div>
                             </div>
                         </div>
@@ -112,7 +80,7 @@
 
             <div class="card p-3">
                 <h6 class="mb-2 text-success">Последни публикации</h6>
-                <ul class="list-unstyled mb-0">
+                @* <ul class="list-unstyled mb-0">
                     @{
                         foreach (var recent in posts.Take(4))
                         {
@@ -128,7 +96,7 @@
                             ;
                         }
                     }
-                </ul>
+                </ul> *@
             </div>
         </aside>
     </div>

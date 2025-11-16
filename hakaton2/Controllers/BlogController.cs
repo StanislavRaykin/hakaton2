@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using hakaton2.dataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace hakaton2.Controllers
@@ -9,60 +10,21 @@ namespace hakaton2.Controllers
     // It uses an in-memory sample list — replace with a DB or service later.
     public class BlogController : Controller
     {
-        private static readonly List<BlogPost> _posts = new()
+        private IBlogManager blogManager;
+        private static readonly List<BlogPost> _posts = new();
+
+        public BlogController(IBlogManager manager)
         {
-            new BlogPost
-            {
-                Title = "Как да подготвяте пластмасата за рециклиране",
-                Excerpt = "Няколко лесни стъпки, които гарантират, че вашите пластмасови опаковки ще бъдат правилно рециклирани.",
-                Slug = "podgotovka-plastmasa",
-                Published = DateTime.UtcNow.AddDays(-7),
-                ImageUrl = "/images/blog/plastic.jpg",
-                Category = "Съвети",
-                ContentHtml = "<p>Примерно съдържание за подготовка на пластмасата...</p>"
-            },
-            new BlogPost
-            {
-                Title = "Историята на една успешна общностна кампания",
-                Excerpt = "Как квартална инициатива събра хората и увеличи събирането на рециклируеми материали с 40%.",
-                Slug = "obshtnost-kampania",
-                Published = DateTime.UtcNow.AddDays(-21),
-                ImageUrl = "/images/blog/community.jpg",
-                Category = "Кампании",
-                ContentHtml = "<p>Примерно съдържание за общностна кампания...</p>"
-            },
-            new BlogPost
-            {
-                Title = "5 начина да повишите своите EcoPoints",
-                Excerpt = "Практични съвети за събиране на повече точки и отключване на награди.",
-                Slug = "5-nachina-ecopoints",
-                Published = DateTime.UtcNow.AddDays(-30),
-                ImageUrl = "/images/blog/tips.jpg",
-                Category = "Съвети",
-                ContentHtml = "<p>Примерно съдържание с 5 съвета...</p>"
-            }
-        };
+            blogManager = manager;
+        }
 
         // GET: /Blog or /Blog?category=...&q=...
-        public IActionResult Index(string category = null, string q = null)
+        public async Task<IActionResult> Index(string category = null, string q = null)
         {
-            var results = _posts.AsEnumerable();
-
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                results = results.Where(p => string.Equals(p.Category, category, StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                results = results.Where(p =>
-                    (p.Title?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    (p.Excerpt?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                    (p.ContentHtml?.Contains(q, StringComparison.OrdinalIgnoreCase) ?? false));
-            }
+            var blogs = await blogManager.GetAll();
 
             // The Blog view expects an IEnumerable<dynamic> — pass the typed list.
-            return View("Blog", results.ToList());
+            return View("Blog", blogs);
         }
 
         // GET: /Blog/Post/{slug}  or /Blog/Post?slug=...

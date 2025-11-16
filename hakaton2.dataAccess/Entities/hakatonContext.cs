@@ -13,6 +13,8 @@ public partial class hakatonContext : DbContext
     {
     }
 
+    public virtual DbSet<Blog> Blogs { get; set; }
+
     public virtual DbSet<Event> Events { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
