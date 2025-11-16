@@ -10,7 +10,7 @@ namespace hakaton2.Controllers
         private readonly IEventManager _eventManager;
         public EventController(IEventManager eventManager) 
         { 
-        _eventManager = eventManager;
+            _eventManager = eventManager;
         }
 
         [HttpGet]
@@ -47,6 +47,23 @@ namespace hakaton2.Controllers
             //db.Events.Add(event);
             //db.SaveChanges();
             return RedirectToAction("Index", "Events");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> IncrementParticipant(int eventId)
+        {
+            // eventId is bound from the hidden input
+            bool Result = await _eventManager.IncrementParticipant(eventId);
+
+            // Persist result for the Details view to show a success or failure message.
+            // Details.cshtml already checks TempData["JoinResult"] and TempData["JoinSuccess"].
+            TempData["JoinResult"] = Result;
+            if (Result)
+            {
+                TempData["JoinSuccess"] = "Успешно се присъединихте към събитието.";
+            }
+
+            return RedirectToAction("Details", "Events", new { id = eventId });
         }
     }
 }

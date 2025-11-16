@@ -45,5 +45,19 @@ namespace hakaton2.dataAccess.data.Access
             EventViewModel evVM = _mapper.Map<EventViewModel>(ev);
             return evVM;
         }
+
+        public async Task<bool> IncrementParticipant(int eventId)
+        {
+            var Event=_hacatoncontext.Events.FirstOrDefault(e => e.EventId == eventId);
+            if (Event.CurrentParticipants == null) {
+                Event.CurrentParticipants = 0;
+            }
+            if (Event?.CurrentParticipants==Event.MaxParticipants) {
+                return false;
+            }
+            Event.CurrentParticipants+=1;
+            _hacatoncontext.SaveChanges();
+            return true;
+        }
     }
 }
