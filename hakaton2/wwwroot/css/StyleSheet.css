@@ -1,5 +1,5 @@
 ﻿.register-container {
-    width: 420px;
+    width: 500px;
     margin: 30px auto;
     background: white;
     padding: 30px;
@@ -52,3 +52,41 @@
     .btn-register:hover {
         opacity: 0.9;
     }
+
+
+
+
+
+.event-form {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* две равни колони */
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #35c152;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}

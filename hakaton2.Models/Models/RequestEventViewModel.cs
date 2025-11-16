@@ -10,6 +10,7 @@ namespace hakaton2.Models
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public string Location { get; set; } = string.Empty;
+        public int MaxParticipants { get; set; }
         public int? CurrentParticipants { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string Creator { get; set; } 
